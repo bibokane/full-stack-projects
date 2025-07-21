@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.bibokane.jobportal.JobportalApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.69 s -- in com.bibokane.jobportal.JobportalApplicationTests
