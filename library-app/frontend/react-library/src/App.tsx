@@ -10,10 +10,9 @@ import { ReviewListPage } from "./layouts/BookCheckoutPage/ReviewListPage/Review
 import { ShelfPage } from "./layouts/ShelfPage/ShelfPage";
 import { MessagesPage } from "./layouts/MessagesPage/MessagesPage";
 import { ManageLibraryPage } from "./layouts/ManageLibraryPage/ManageLibraryPage";
-
+import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import { auth0Config } from "./lib/authOConfig";
 import LoginPage from "./Auth/LoginPage";
-import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 
 const Auth0ProviderWithHistory = ({
   children,
@@ -79,6 +78,7 @@ export const App = () => {
             <Route path="/checkout/:bookId">
               <BookCheckoutPage />
             </Route>
+
             <Route path="/login" render={() => <LoginPage />} />
             <SecureRoute path="/shelf" component={ShelfPage} />
             <SecureRoute path="/messages" component={MessagesPage} />

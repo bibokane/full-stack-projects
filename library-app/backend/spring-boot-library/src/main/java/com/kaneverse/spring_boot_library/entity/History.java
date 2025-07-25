@@ -1,11 +1,14 @@
 package com.kaneverse.spring_boot_library.entity;
-import jakarta.persistence.*;
+
 import lombok.Data;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "History")
 @Data
 public class History {
+
     public History(){}
 
     public History(String userEmail, String checkoutDate, String returnedDate, String title,
@@ -45,3 +48,15 @@ public class History {
     @Column(name="img")
     private String img;
 }
+
+
+
+
+
+
+
+
+
+
+
+

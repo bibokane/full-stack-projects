@@ -1,4 +1,5 @@
 package com.kaneverse.spring_boot_library.entity;
+
 import lombok.Data;
 import jakarta.persistence.*;
 
