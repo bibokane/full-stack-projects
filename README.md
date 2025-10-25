@@ -1,6 +1,6 @@
 # Full-Stack-Projekte Portfolio
 
-Ein umfassendes Portfolio von modernen Full-Stack-Webanwendungen, die mit aktuellen Java- und JavaScript-Technologien entwickelt wurden. Dieses Repository enthält zwei vollständige Anwendungen, die verschiedene Architekturmuster und Technologiestacks demonstrieren.
+Dieses Repository enthält meine Full-Stack-Projekte, die ich im Rahmen meiner praktischen Softwareentwicklung mit Spring Boot, React und modernen Cloud-Technologien umgesetzt habe. Ziel dieser Anwendungen ist es, praxisnahe Szenarien (z. B. Jobportal, Bibliotheksverwaltung) mit Clean Code, moderner Architektur und realistischen Technologien umzusetzen.
 
 ## 📋 Projektübersicht
 
