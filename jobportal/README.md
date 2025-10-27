@@ -1,34 +1,36 @@
 # 🎯 Job Portal - HotDevJobs.com
 
-Eine vollständige Jobbörse-Webanwendung, entwickelt mit Spring Boot und modernen Java-Technologien. Die Anwendung bietet eine Plattform für Jobsuchende und Recruiter, um Stellenausschreibungen zu verwalten und zu durchsuchen.
+Eine Jobbörse-Webanwendung, entwickelt mit Spring Boot und Thymeleaf. Die Anwendung bietet eine Plattform für Jobsuchende und Recruiter, um Stellenausschreibungen zu durchsuchen und zu verwalten.
 
 ## 📋 Projektübersicht
 
-**HotDevJobs.com** ist eine professionelle Jobbörse, die moderne Web-Technologien nutzt, um eine nahtlose Erfahrung für beide Benutzergruppen zu bieten. Die Anwendung implementiert serverseitiges Rendering mit Thymeleaf und bietet umfassende Such- und Filterfunktionen mit verschiedenen Jobtypen und Remote-Optionen.
+**HotDevJobs.com** ist eine Jobbörse-Webanwendung, die moderne Java-Technologien nutzt. Die Anwendung implementiert serverseitiges Rendering mit Thymeleaf und bietet Such- und Filterfunktionen für Stellenausschreibungen.
 
 ## ✨ Hauptfunktionen
 
 ### 🔍 **Jobsuche & -verwaltung**
 - **Globale Jobsuche** mit Filterung nach Position und Standort
 - **Erweiterte Suchfilter**: Vollzeit, Teilzeit
-- **Jobdetails** mit vollständigen Beschreibungen und Anforderungen
+- **Remote-Optionen**: Remote-Only, Office-Only, Partial-Remote
+- **Zeitbasierte Filter**: Heute, 7 Tage, 30 Tage
+- **Jobdetails** mit Beschreibungen und Anforderungen
 
 ### 👥 **Benutzerverwaltung**
-- **Duale Benutzertypen**: Jobsuchende und Recruiter
+- **Zwei Benutzertypen**: Jobsuchende und Recruiter
 - **Sichere Authentifizierung** mit Spring Security
-- **Profilmanagement** für beide Benutzergruppen
-- **Rollenbasierte Zugriffskontrolle**
+- **Benutzerregistrierung** mit Rollenauswahl
+- **Rollenbasierte Navigation** und Zugriffskontrolle
 
 ### 📝 **Stellenausschreibungen**
-- **CRUD-Operationen** für Stellenausschreibungen
-- **Job-Posting** mit detaillierten Beschreibungen
-- **Bewerbungsmanagement** für Jobsuchende
-- **Gespeicherte Jobs** für spätere Bewerbungen
+- **Job-Posting** für Recruiter
+- **Job-Bearbeitung** und -Verwaltung
+- **Jobsuche** für Jobsuchende
+- **Bewerbungsfunktionen** (Grundfunktionalität)
 
 ### 🎨 **Benutzeroberfläche**
 - **Responsive Design** mit Bootstrap 5
-- **Mobile-optimierte** Benutzeroberfläche
-- **Intuitive Navigation** und Benutzerführung
+- **Thymeleaf-Templates** für serverseitiges Rendering
+- **Rollenbasierte Navigation** (unterschiedliche Menüs für Jobsuchende/Recruiter)
 - **Moderne UI-Komponenten** mit Font Awesome Icons
 
 ## 🛠️ Technologie-Stack
@@ -40,7 +42,6 @@ Eine vollständige Jobbörse-Webanwendung, entwickelt mit Spring Boot und modern
 - **Spring Security 6** - Authentifizierung & Autorisierung
 - **Spring Data JPA** - Datenzugriff
 - **Hibernate 6** - ORM-Framework
-- **Thymeleaf** - Template Engine
 - **MySQL** - Datenbank
 
 ### **Frontend**
@@ -60,7 +61,7 @@ Eine vollständige Jobbörse-Webanwendung, entwickelt mit Spring Boot und modern
 ```
 jobportal/
 ├── src/main/java/com/bibokane/jobportal/
-│   ├── controller/              # REST-Controller
+│   ├── controller/              # Web-Controller
 │   │   ├── HomeController.java
 │   │   ├── JobPostActivityController.java
 │   │   ├── JobSeekerApplyController.java
@@ -85,8 +86,12 @@ jobportal/
 │   ├── entity/                  # JPA-Entitäten
 │   │   ├── JobPostActivity.java
 │   │   ├── JobSeekerApply.java
+│   │   ├── JobSeekerProfile.java
 │   │   ├── JobSeekerSave.java
+│   │   ├── JobCompany.java
+│   │   ├── JobLocation.java
 │   │   ├── RecruiterProfile.java
+│   │   ├── Skills.java
 │   │   ├── Users.java
 │   │   └── UsersType.java
 │   ├── config/                  # Konfiguration
@@ -194,17 +199,23 @@ spring.servlet.multipart.max-request-size=10MB
 ## 📊 Datenmodell
 
 ### **Hauptentitäten**
-- **Users**: Benutzerverwaltung (Jobsuchende & Recruiter)
-- **JobPostActivity**: Stellenausschreibungen
+- **Users**: Benutzerverwaltung (Email, Passwort, Benutzertyp)
+- **UsersType**: Benutzertypen (Job Seeker, Recruiter)
+- **JobPostActivity**: Stellenausschreibungen (Titel, Beschreibung, Typ, Remote, Gehalt)
+- **JobLocation**: Jobstandorte (Stadt, Bundesland, Land)
+- **JobCompany**: Unternehmen
+- **JobSeekerProfile**: Profil von Jobsuchenden (Name, Standort, Skills, Lebenslauf)
+- **RecruiterProfile**: Profil von Recruitern
 - **JobSeekerApply**: Bewerbungen
 - **JobSeekerSave**: Gespeicherte Jobs
-- **RecruiterProfile**: Recruiter-Profile
-- **JobSeekerProfile**: Jobsuchende-Profile
+- **Skills**: Fähigkeiten von Jobsuchenden
 
 ### **Beziehungen**
-- Ein User kann mehrere JobPostActivity erstellen (Recruiter)
-- Ein User kann sich auf mehrere Jobs bewerben (Jobsuchende)
-- Ein User kann mehrere Jobs speichern (Jobsuchende)
+- Ein User hat einen UsersType (Job Seeker oder Recruiter)
+- Ein User kann ein JobSeekerProfile oder RecruiterProfile haben
+- Ein JobPostActivity gehört zu einem User (Recruiter) und hat eine JobLocation und JobCompany
+- Ein JobSeeker kann sich auf mehrere Jobs bewerben (JobSeekerApply)
+- Ein JobSeeker kann mehrere Jobs speichern (JobSeekerSave)
 
 ## 🔐 Sicherheit
 
@@ -212,23 +223,28 @@ spring.servlet.multipart.max-request-size=10MB
 - **Authentifizierung**: Formular-basierte Anmeldung
 - **Autorisierung**: Rollenbasierte Zugriffskontrolle
 - **Sessions**: HTTP-Session-Management
-- **CSRF-Schutz**: Aktiviert
+- **CSRF-Schutz**: Deaktiviert (für Entwicklung)
 - **Password-Encoding**: BCrypt
 
 ### **Benutzerrollen**
-- **ROLE_JOBSEEKER**: Jobsuchende
-- **ROLE_RECRUITER**: Recruiter
+- **"Job Seeker"**: Jobsuchende
+- **"Recruiter"**: Recruiter
 
 ## 🎨 Benutzeroberfläche
 
 ### **Seiten-Übersicht**
 - **Startseite** (`/`): Jobsuche und Navigation
 - **Anmeldung** (`/login`): Benutzeranmeldung
-- **Registrierung** (`/register`): Benutzerregistrierung
-- **Dashboard** (`/dashboard/`): Hauptarbeitsbereich
-- **Jobsuche** (`/global-search/`): Erweiterte Jobsuche
-- **Job hinzufügen** (`/dashboard/add`): Stellenausschreibung erstellen
-- **Profil** (`/profile`): Benutzerprofil verwalten
+- **Registrierung** (`/register`): Benutzerregistrierung mit Rollenauswahl
+- **Dashboard** (`/dashboard/`): Hauptarbeitsbereich mit rollenbasierter Navigation
+- **Jobsuche** (`/global-search/`): Erweiterte Jobsuche mit Filtern
+- **Job hinzufügen** (`/dashboard/add`): Stellenausschreibung erstellen (nur Recruiter)
+- **Job bearbeiten** (`/dashboard/edit/{id}`): Job bearbeiten (nur Recruiter)
+- **Profil** (`/job-seeker-profile/`, `/recruiter-profile/`): Profil verwalten
+
+### **Rollenbasierte Navigation**
+- **Job Seeker**: Jobsuche, Gespeicherte Jobs, Profil bearbeiten
+- **Recruiter**: Job posten, Eigene Jobs anzeigen, Profil bearbeiten
 
 ### **Responsive Design**
 - **Mobile-first** Ansatz
@@ -236,13 +252,11 @@ spring.servlet.multipart.max-request-size=10MB
 - **Flexible Layouts** für alle Bildschirmgrößen
 - **Touch-optimierte** Bedienelemente
 
-
 ## 📈 Performance & Monitoring
 
 ### **Entwicklungstools**
 - **Spring Boot DevTools**: Hot-Reload
 - **H2 Console**: Datenbank-Debugging (optional)
-- **Actuator**: Health-Checks und Metriken
 
 ### **Optimierungen**
 - **JPA Lazy Loading**: Optimierte Datenbankabfragen
@@ -285,11 +299,13 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 - `GET /login` - Anmeldung
 - `POST /login` - Anmeldung verarbeiten
 - `GET /register` - Registrierung
-- `POST /register` - Registrierung verarbeiten
-- `GET /dashboard/` - Dashboard
-- `GET /global-search/` - Jobsuche
-- `POST /dashboard/addNew` - Job hinzufügen
+- `POST /register/new` - Registrierung verarbeiten
+- `GET /dashboard/` - Dashboard mit Jobsuche
+- `GET /global-search/` - Erweiterte Jobsuche
+- `GET /dashboard/add` - Job hinzufügen (nur Recruiter)
+- `POST /dashboard/addNew` - Job speichern
 - `GET /dashboard/edit/{id}` - Job bearbeiten
+- `GET /logout` - Abmeldung
 
 ## 🤝 Beitragen
 
@@ -307,7 +323,5 @@ Dieses Projekt dient zu Demonstrations- und Lernzwecken.
 
 **Habib Kane**  
 *Full-Stack Developer*
-
----
 
 
