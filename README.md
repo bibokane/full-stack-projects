@@ -10,6 +10,9 @@ Eine vollständige Jobbörse-Webanwendung mit serverseitigem Rendering, die mode
 ### 📚 Library Management System (React + Spring Boot)
 Eine moderne Full-Stack-Bibliotheksverwaltungsanwendung mit React-Frontend und Spring Boot-Backend.
 
+### 🏆 Turnier App (Angular + Spring Boot)
+Eine vollständige Full-Stack Turnier-App mit Angular-Frontend und Spring Boot-Backend für 16 Mannschaften mit Gruppenphase und K.O.-System.
+
 ---
 
 ## 🚀 Projekt 1: Job Portal
@@ -170,6 +173,113 @@ library-app/
 
 ---
 
+## 🏆 Projekt 3: Turnier App
+
+### Beschreibung
+Eine vollständige Full-Stack Turnier-App mit Angular-Frontend und Spring Boot-Backend für 16 Mannschaften. Die Anwendung verwaltet ein komplettes Turnier mit Gruppenphase (4 Gruppen à 4 Mannschaften) und K.O.-System (Viertelfinale, Halbfinale, Finale). Die App demonstriert die Integration von Angular SPAs mit RESTful Spring Boot APIs.
+
+### ✨ Hauptfunktionen
+- **Mannschaftsverwaltung**: Registrierung und Verwaltung von 16 Mannschaften
+- **Gruppenphase**: Automatische Verteilung in 4 Gruppen, jeder gegen jeden
+- **K.O.-Phase**: Automatische Weiterleitung der Sieger durch Viertelfinale, Halbfinale und Finale
+- **Ergebnisverwaltung**: Eingabe von Spielergebnissen mit automatischer Tabellenaktualisierung
+- **Statistik-System**: Automatische Berechnung von Punkten, Toren und Tabellenpositionen
+- **Moderne UI**: Responsive, farbenfrohe Benutzeroberfläche mit Animationen
+- **RESTful API**: Vollständige API für alle Turnier-Operationen
+
+### 🛠️ Technologie-Stack
+
+#### Frontend
+- **Framework**: Angular 17 mit TypeScript
+- **Architektur**: Standalone Components
+- **Styling**: SCSS mit modernem Design-System
+- **HTTP Client**: Angular HttpClient mit RxJS
+- **Build Tool**: Angular CLI
+
+#### Backend
+- **Framework**: Spring Boot 3.2.0, Java 17
+- **Persistenz**: Spring Data JPA mit H2 In-Memory Database
+- **API**: RESTful Web Services
+- **Architektur**: Service-basierte Architektur (MannschaftService, GruppeService, SpielService, etc.)
+- **Validierung**: Custom Exceptions und umfassende Fehlerbehandlung
+- **Build Tool**: Maven
+
+### 📁 Projektstruktur
+```
+turnier-app/
+├── src/main/java/com/turnier/
+│   ├── controller/          # REST-Controller
+│   ├── service/            # Geschäftslogik (mehrere Services)
+│   ├── repository/         # Datenzugriff
+│   ├── entity/             # JPA-Entitäten
+│   ├── exception/          # Custom Exceptions
+│   └── TurnierAppApplication.java
+├── src/main/resources/
+│   └── application.properties
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/    # Angular-Komponenten
+│   │   │   ├── services/       # Angular-Services
+│   │   │   └── models/         # TypeScript-Modelle
+│   │   ├── styles.scss        # Globale Styles
+│   │   └── index.html
+│   └── package.json
+└── pom.xml
+```
+
+### 🚀 Installation & Ausführung
+
+#### Voraussetzungen
+- Java 17 oder höher
+- Node.js 16+ und npm
+- Maven 3.6+
+
+#### Backend Setup
+1. **Projekt starten**:
+   ```bash
+   cd turnier-app
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+2. **Backend läuft auf**: `http://localhost:8081`
+
+#### Frontend Setup
+1. **Dependencies installieren**:
+   ```bash
+   cd turnier-app/frontend
+   npm install
+   ```
+
+2. **Frontend starten**:
+   ```bash
+   npm start
+   ```
+
+3. **Anwendung aufrufen**: `http://localhost:4200`
+
+### 🎮 Verwendung
+
+1. **Mannschaften registrieren**: Fügen Sie 16 Mannschaften hinzu
+2. **Gruppen erstellen**: Klicken Sie "Gruppen erstellen" (automatische Verteilung in 4 Gruppen)
+3. **Gruppenphase starten**: Erstellt alle Gruppenspiele (24 Spiele)
+4. **Ergebnisse eingeben**: Geben Sie für jedes Spiel die Tore ein
+5. **K.O.-Phase**: Nach Abschluss der Gruppenphase automatisch Viertelfinale → Halbfinale → Finale
+6. **Sieger**: Der Turniersieger wird automatisch angezeigt
+
+### 📋 API Endpoints
+
+- `POST /api/turnier/mannschaften` - Mannschaft erstellen
+- `GET /api/turnier/mannschaften` - Alle Mannschaften abrufen
+- `POST /api/turnier/gruppen/erstellen` - Gruppen erstellen
+- `POST /api/turnier/gruppenspiele/erstellen` - Gruppenspiele erstellen
+- `PUT /api/turnier/spiele/{id}/ergebnis` - Spielergebnis aktualisieren
+- `POST /api/turnier/naechste-runde` - Nächste Runde erstellen
+- `GET /api/turnier/status` - Turnierstatus abrufen
+
+---
+
 ## 🔧 Entwicklungsumgebung
 
 ### Empfohlene Tools
@@ -229,6 +339,26 @@ library-app/
 └─────────────────┘    └─────────────────┘
 ```
 
+### Turnier App (Angular SPA + REST API)
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Angular SPA   │    │   Spring Boot   │    │   Spring Data   │
+│   Frontend      │◄──►│   REST API      │◄──►│   JPA/Hibernate │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       ▼
+         │                       │              ┌─────────────────┐
+         │                       │              │   H2 In-Memory │
+         │                       │              │   Database      │
+         │                       │              └─────────────────┘
+         │                       │
+         ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐
+│   RxJS          │    │  Service Layer  │
+│   Observables   │    │  (Multiple)      │
+└─────────────────┘    └─────────────────┘
+```
+
 ---
 ### Job Portal
 - ✅ **Spring Boot MVC**: Serverseitiges Rendering mit Thymeleaf
@@ -245,6 +375,14 @@ library-app/
 - ✅ **OAuth2/JWT**: Moderne Authentifizierung
 - ✅ **Rollenbasierte Sicherheit**: Granulare Zugriffskontrolle
 - ✅ **Component-basierte Architektur**: Wiederverwendbare UI-Komponenten
+
+### Turnier App
+- ✅ **Angular SPA**: Moderne Frontend-Entwicklung mit Standalone Components
+- ✅ **TypeScript**: Typsichere JavaScript-Entwicklung
+- ✅ **RESTful APIs**: Backend-Frontend-Kommunikation
+- ✅ **Service-basierte Architektur**: Modulare Backend-Struktur
+- ✅ **In-Memory Database**: Schnelle Entwicklung mit H2
+- ✅ **Modern UI**: Responsive Design mit Animationen und Gradients
 
 ## 👨‍💻 Autor
 
